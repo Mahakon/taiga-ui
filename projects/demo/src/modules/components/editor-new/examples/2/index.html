@@ -1,0 +1,33 @@
+<tui-editor
+    new
+    class="editor"
+    [formControl]="control"
+    [tools]="getTools(toolbarTools, smilesTool)"
+>
+    Smiles are custom tool. Try it.
+</tui-editor>
+
+<ng-template #smilesTool let-editor>
+    <tui-hosted-dropdown #dropdown class="t-wrapper" [content]="smileDropdown">
+        <button
+            tuiIconButton
+            type="button"
+            size="s"
+            icon="tuiIconStarLarge"
+            appearance="icon"
+            class="tool-button"
+            [pseudoPressed]="dropdown.open"
+            [focusable]="dropdown.open"
+        ></button>
+        <ng-template #smileDropdown let-activeZone>
+            <div [tuiActiveZoneParent]="activeZone" class="smiles">
+                <button
+                    *ngFor="let smile of smiles"
+                    class="smile"
+                    [innerHTML]="smile"
+                    (click)="insertSmile(editor, smile)"
+                ></button>
+            </div>
+        </ng-template>
+    </tui-hosted-dropdown>
+</ng-template>
